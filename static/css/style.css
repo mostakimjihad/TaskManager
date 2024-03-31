@@ -1,0 +1,27 @@
+.bg-holder{
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.navbar-nav{ 
+    margin-left: auto; 
+}
+
+.btn-pink{
+    background-color: #F785AD;
+    border: none;
+}
