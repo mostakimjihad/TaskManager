@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Employee, Project
+from .models import Employee, Project, ProjectUpdate
 from django.contrib import messages
 
 # Create your views here.
@@ -28,8 +28,10 @@ def dashboard(request):
     if 'user_id' in request.session:
         user_id = request.session['user_id']
         employees = Employee.objects.all()
+        projects = Project.objects.all()
         employee = Employee.objects.get(id=user_id)
-        return render(request, 'dashboard.html', {'employee': employee, 'employees': employees})
+        assigned_projects = employee.projects.all()
+        return render(request, 'dashboard.html', {'employee': employee, 'employees': employees, 'assigned_projects': assigned_projects, 'projects': projects})
     else:
         return redirect('login')
     
@@ -93,4 +95,24 @@ def create_employee(request):
         
     else:
         return redirect('login')
+    
+
+
+def details(request, project_id):
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        employee = Employee.objects.get(id=user_id)
+        project = Project.objects.get(id=project_id)
+        updates = ProjectUpdate.objects.filter(project=project)
+        employees = project.team.all()
+        if request.method == 'POST':
+            comment = request.POST.get('comment')
+            completion = request.POST.get('completion')
+            update = ProjectUpdate.objects.create(employee=employee, project=project, comment=comment, completion=completion)
+            return redirect('details', project_id=project_id)
+        else:
+            return render(request, 'details.html', {'employee': employee, 'employees': employees, 'project': project, 'updates': updates})
+    else:
+        return redirect('login')
+
     

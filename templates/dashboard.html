@@ -11,7 +11,7 @@
    </head>
    <body>
       <nav class="navbar navbar-expand-lg navbar-light p-3" style="background-color:#FDE4EA;">
-         <a class="navbar-brand" href="#">Dashboard</a>
+         <a class="navbar-brand" href="{% url 'dashboard' %}">Dashboard</a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
          </button>
@@ -58,22 +58,42 @@
                   </svg>
                </h2>
                <div class="d-flex justify-content-between">
-                  <div class="card" style="width: 18rem;">
-                     <div class="card-body">
-                        <h5 class="card-title">Project Name</h5>
-                     </div>
-                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><span class="fw-bold">Status : </span>10%</li>
-                        <li class="list-group-item"><span class="fw-bold">Last update : </span>project added</li>
-                        <li class="list-group-item"><span class="fw-bold">Due date : </span>Cras justo odio</li>
-                     </ul>
-                     <div class="card-body">
-                        <a href="#" class="card-link">Archive</a>
-                        <a href="#" class="card-link">Details</a>
-                     </div>
-                  </div>
+                  {% if employee.roll == "admin" %}
+                     {% for project in projects %}
+                        <div class="card" style="width: 18rem;">
+                           <div class="card-body">
+                              <h5 class="card-title">{{ project.project_name }}</h5>
+                           </div>
+                           <ul class="list-group list-group-flush">
+                              <li class="list-group-item"><span class="fw-bold">Status : </span>{{ project.status }}</li>
+                              <li class="list-group-item"><span class="fw-bold">Last update : </span>project added</li>
+                              <li class="list-group-item"><span class="fw-bold">Due date : </span>{{ project.due_date }}</li>
+                           </ul>
+                           <div class="card-body">
+                              <a href="{% url 'details' project.id %}" class="card-link">Details</a>
+                           </div>
+                        </div>
+                     {% endfor %}
+                  {% else %}
+                     {% for assigned_project in assigned_projects %}
+                        <div class="card" style="width: 18rem;">
+                           <div class="card-body">
+                              <h5 class="card-title">{{ assigned_project.project_name }}</h5>
+                           </div>
+                           <ul class="list-group list-group-flush">
+                              <li class="list-group-item"><span class="fw-bold">Status : </span>{{ assigned_project.status }}</li>
+                              <li class="list-group-item"><span class="fw-bold">Last update : </span>project added</li>
+                              <li class="list-group-item"><span class="fw-bold">Due date : </span>{{ assigned_project.due_date }}</li>
+                           </ul>
+                           <div class="card-body">
+                              <a href="{% url 'details' assigned_project.id %}" class="card-link">Details</a>
+                           </div>
+                        </div>
+                     {% endfor %}
+                  {% endif %}
                </div>
             </div>
+            {% if employee.roll == "admin" %}
             <div class="col-lg-6 shadow p-3">
                <h2 class="text-center">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
@@ -105,6 +125,7 @@
                   </tbody>
                </table>
             </div>
+            {% endif %}
          </div>
       </div>
       <!-- content end -->

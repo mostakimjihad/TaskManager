@@ -11,23 +11,25 @@
    </head>
    <body>
       <nav class="navbar navbar-expand-lg navbar-light p-3" style="background-color:#FDE4EA;">
-         <a class="navbar-brand" href="#">Dashboard</a>
+         <a class="navbar-brand" href="{% url 'dashboard' %}">Dashboard</a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
          </button>
          <span class="navbar-text">
-         Hi, Mostakim Jihad
+         Hi, {{employee.username}}
          </span>
          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
+               {% if employee.roll == "admin" %}
                <li class="nav-item active">
-                  <a class="nav-link" href="#">Create Project</a>
+                  <a class="nav-link" href="{% url 'create_project' %}">Create Project</a>
                </li>
                <li class="nav-item active">
-                  <a class="nav-link" href="#">Create User</a>
+                  <a class="nav-link" href="{% url 'create_employee' %}">Create Employee</a>
                </li>
+               {% endif %}
                <li class="nav-item active">
-                  <a class="nav-link fw-bold" href="#">
+                  <a class="nav-link fw-bold" href="{% url 'logout' %}">
                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
                         <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
@@ -46,7 +48,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
                      <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
                   </svg>
-                  User
+                  {{ employee.roll }}
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
                      <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
                   </svg>
@@ -54,48 +56,52 @@
                <table class="table table-bordered">
                   <thead>
                      <tr class="table-danger">
-                        <th scope="col">SL</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Comment</th>
                         <th scope="col">Completion</th>
+                        <th scope="col">Comment By</th>
                      </tr>
                   </thead>
                   <tbody>
+                     {% for update in updates%}
                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
+                        <th scope="row">{{ update.id }}</th>
+                        <td>{{ update.comment }}</td>
+                        <td>{{ update.completion }}</td>
+                        <td>{{ update.employee.username }}</td>
                      </tr>
-                     <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                     </tr>
-                     <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                     </tr>
+                     {% endfor %}
                   </tbody>
                </table>
                <!-- Button trigger modal -->
                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-               Launch demo modal
+               Add Update
                </button>
                <!-- Modal -->
                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                      <div class="modal-content">
-                        <div class="modal-header">
-                           <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                           ...
-                        </div>
-                        <div class="modal-footer">
-                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                           <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
+                        <form action="{% url 'details' project.id %}" method="post">
+                           {% csrf_token %}
+                           <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Add Update</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                           </div>
+                           <div class="modal-body">
+                              <div class="form-group">
+                                 <label for="exampleInputEmail1">Project Update</label>
+                                 <input name="comment" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Comment">
+                              </div>
+                              <div class="form-group">
+                                 <label for="exampleInputPassword1">Completion (%)</label>
+                                 <input name="completion" type="number" class="form-control" id="exampleInputPassword1" placeholder="Completion">
+                              </div>
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Save changes</button>
+                           </div>
+                        </form>
                      </div>
                   </div>
                </div>
