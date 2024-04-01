@@ -4,7 +4,7 @@
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>create_project</title>
+      <title>create_employee</title>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
       <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -25,7 +25,7 @@
                   <a class="nav-link" href="{% url 'create_project' %}">Create Project</a>
                </li>
                <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'create_employee' %}">Create User</a>
+                  <a class="nav-link" href="{% url 'create_employee' %}">Create Employee</a>
                </li>
                {% endif %}
                <li class="nav-item active">
@@ -52,63 +52,44 @@
             <div class="row align-items-center justify-content-center h-100 g-0 px-4 px-sm-0">
                <div class="col col-sm-6 col-lg-7 col-xl-6">
                   <div class="text-center mb-5">
-                     {% if messages %}
-                       {% for message in messages %}
-                           <div class="alert alert-danger" role="alert">
-                                 {{ message }}
-                           </div>
-                       {% endfor %}
-                     {% endif %}
-                     <h3 class="fw-bold">Create New Project</h3>
+                     <h3 class="fw-bold">Create New Employee</h3>
                      <p class="text-secondary">Provide given information</p>
                   </div>
                   <!-- form -->
-                  <form action="{% url 'create_project' %}" method="post">
+                  <form action="{% url 'create_employee' %}" method="post">
                      {% csrf_token %}
-                     <p class="text-secondary">Project Name</p>
+                     <p class="text-secondary">Username</p>
                      <div class="input-group mb-3">
                         <span class="input-group-text">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-task" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z"/>
-                              <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z"/>
-                              <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z"/>
-                           </svg>
-                        </span>
-                        <input name="project_name" type="text" class="form-control form-control-lg fs-6" placeholder="Name">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                               <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg>
+                         </span>
+                        <input name="username" type="text" class="form-control form-control-lg fs-6" placeholder="Name">
                      </div>
-                     <p class="text-secondary">Deadline</p>
+                     <p class="text-secondary">Password</p>
                      <div class="input-group mb-3">
                         <span class="input-group-text">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hourglass-split" viewBox="0 0 16 16">
-                              <path d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z"/>
-                           </svg>
-                        </span>
-                        <input name="due_date" type="date" class="form-control form-control-lg fs-6" placeholder="Deadline">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-lock2-fill" viewBox="0 0 16 16">
+                               <path d="M7 6a1 1 0 0 1 2 0v1H7z"/>
+                               <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2m-2 6v1.076c.54.166 1 .597 1 1.224v2.4c0 .816-.781 1.3-1.5 1.3h-3c-.719 0-1.5-.484-1.5-1.3V8.3c0-.627.46-1.058 1-1.224V6a2 2 0 1 1 4 0"/>
+                            </svg>
+                         </span>
+                        <input name="password" type="password" class="form-control form-control-lg fs-6" placeholder="Password">
                      </div>
                      <div class="input-group mb-3">
-                        <p class="text-secondary">Product Manager</p>
-                        <select name="manager" id="countries" multiple>
-                           {% for manager in available_managers%}
-                           <option value="{{ manager.id }}">{{ manager.username }}</option>
-                           {% endfor %}
-                        </select>
+                        <select name="roll" class="form-select" aria-label="Default select example">
+                            <option selected>Roll</option>
+                            <option value="manager">Product Manager</option>
+                            <option value="developer">Developer</option>
+                          </select>
                      </div>
                      <button type="submit" class="btn btn-primary btn-lg w-100 mb-3 btn-pink">Create</button>
                   </form>
-                  <!-- form end -->
-                  <!-- <div class="text-center">
-                     <small>Don't have an account? <a href="#" class="fw-bold">Sign Up</a></small>
-                     </div> -->
                </div>
             </div>
          </div>
-         <!-- right side end -->
-         <!-- right image -->
-         <!-- <div class="col-lg-3 position-relative d-none d-lg-block">
-            <div class="bg-holder" style="background-image: url(signup2.jpeg);">
-            </div>
-            </div> -->
-         <!-- right image end -->
       </div>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>

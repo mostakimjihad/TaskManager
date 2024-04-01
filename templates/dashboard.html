@@ -16,12 +16,20 @@
          <span class="navbar-toggler-icon"></span>
          </button>
          <span class="navbar-text">
-         Hi, Mostakim Jihad
+         Hi, {{employee.username}}
          </span>
          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
+               {% if employee.roll == "admin" %}
                <li class="nav-item active">
-                  <a class="nav-link fw-bold" href="#">
+                  <a class="nav-link" href="{% url 'create_project' %}">Create Project</a>
+               </li>
+               <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'create_employee' %}">Create Employee</a>
+               </li>
+               {% endif %}
+               <li class="nav-item active">
+                  <a class="nav-link fw-bold" href="{% url 'logout' %}">
                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
                         <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
@@ -55,21 +63,7 @@
                         <h5 class="card-title">Project Name</h5>
                      </div>
                      <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><span class="fw-bold">Completion status : </span>10%</li>
-                        <li class="list-group-item"><span class="fw-bold">Last update : </span>project added</li>
-                        <li class="list-group-item"><span class="fw-bold">Due date : </span>Cras justo odio</li>
-                     </ul>
-                     <div class="card-body">
-                        <a href="#" class="card-link">Archive</a>
-                        <a href="#" class="card-link">Details</a>
-                     </div>
-                  </div>
-                  <div class="card" style="width: 18rem;">
-                     <div class="card-body">
-                        <h5 class="card-title">Project Name</h5>
-                     </div>
-                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><span class="fw-bold">Completion status : </span>10%</li>
+                        <li class="list-group-item"><span class="fw-bold">Status : </span>10%</li>
                         <li class="list-group-item"><span class="fw-bold">Last update : </span>project added</li>
                         <li class="list-group-item"><span class="fw-bold">Due date : </span>Cras justo odio</li>
                      </ul>
@@ -93,31 +87,21 @@
                <table class="table table-bordered shadow">
                   <thead>
                      <tr class="table-danger">
-                        <th scope="col">SL</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Username</th>
                         <th scope="col">Password</th>
                         <th scope="col">Roll</th>
                      </tr>
                   </thead>
                   <tbody>
+                     {% for employee in employees %}
                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <th scope="row">{{ employee.id}}</th>
+                        <td>{{ employee.username}}</td>
+                        <td>{{ employee.password}}</td>
+                        <td>{{ employee.roll}}</td>
                      </tr>
-                     <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                     </tr>
-                     <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                     </tr>
+                     {% endfor %}
                   </tbody>
                </table>
             </div>
