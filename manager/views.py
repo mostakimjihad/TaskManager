@@ -33,8 +33,11 @@ def dashboard(request):
         assigned_projects = employee.projects.all()
         last_updates = {}
         for p in projects:
-            last_updates[p.id] = ProjectUpdate.objects.filter(project=p).order_by('-id').first().comment
-
+            latest_update = ProjectUpdate.objects.filter(project=p).order_by('-id').first()
+            if latest_update is not None:
+                last_updates[p.id] = latest_update.comment
+            else:
+                last_updates[p.id] = "No updates available"
         print(last_updates)
         return render(request, 'dashboard.html', {'employee': employee, 'employees': employees, 'assigned_projects': assigned_projects, 'projects': projects, 'last_updates': last_updates})
     else:
@@ -123,7 +126,7 @@ def details(request, project_id):
                 comment = request.POST.get('comment')
                 completion = request.POST.get('completion')
                 print(completion)
-                if int(completion) <= int(compare) or int(compare) > 100:
+                if int(completion) <= int(compare) or int(completion) > 100:
                     messages.error(request, 'Completion should be greater than the previous completion and not greater than 100%')
                     return redirect('details', project_id=project_id)
                 else:
@@ -131,9 +134,18 @@ def details(request, project_id):
                     return redirect('details', project_id=project_id)
             
             elif 'add_developer' in request.POST and employee.roll == 'manager':
-                developer_id = request.POST.get('developer')
-                developer = Employee.objects.get(id=developer_id)
-                project.team.add(developer)
+                developer_ids = request.POST.getlist('developer')
+                if len(developer_ids) < 2:
+                    messages.error(request, 'select at least two manager')
+                    return redirect('details', project_id=project_id)
+                else:
+                    for developer_id in developer_ids:
+                        developer = Employee.objects.get(id=developer_id)
+                        project.team.add(developer)
+                    return redirect('details', project_id=project_id)
+            elif 'complete' in request.POST and employee.roll == 'manager' and project.status == 'ongoing' and last_update.completion == '100':
+                project.status = 'complete'
+                project.save()
                 return redirect('details', project_id=project_id)
 
         return render(request, 'details.html', {'employee': employee, 'employees': employees, 'project': project, 'updates': updates, 'last_update': last_update, 'available_developers': available_developers})

@@ -62,12 +62,12 @@
                   </svg>
                </h2>
                <hr>
-               <div class="d-flex justify-content-between">
+               <div class="d-flex justify-content-start p-2">
                   {% if employee.roll == "admin" %}
                      {% for project in projects %}
                         <div class="card" style="width: 18rem;">
                            <div class="card-body">
-                              <h5 class="card-title">{{ project.project_name }}</h5>
+                              <h5 class="card-title text-center">{{ project.project_name }}</h5>
                            </div>
                            <ul class="list-group list-group-flush">
                               <li class="list-group-item"><span class="fw-bold">Status : </span>{{ project.status }}</li>
@@ -87,9 +87,9 @@
                      {% endfor %}
                   {% else %}
                      {% for assigned_project in assigned_projects %}
-                        <div class="card" style="width: 18rem;">
+                        <div class="card" style="width: 18rem; margin-right: 2rem;">
                            <div class="card-body">
-                              <h5 class="card-title">{{ assigned_project.project_name }}</h5>
+                              <h5 class="card-title text-center">{{ assigned_project.project_name }}</h5>
                            </div>
                            <ul class="list-group list-group-flush">
                               <li class="list-group-item"><span class="fw-bold">Status : </span>{{ assigned_project.status }}</li>
