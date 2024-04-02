@@ -50,7 +50,7 @@
 The task management system developed for the startup aims to provide a robust platform for streamlining project workflows within the organization. It caters to both internal teams and external clients, offering features that facilitate effective communication, task tracking, and project management. The system is designed to be intuitive and feature-rich, enhancing productivity and collaboration among team members.
 
 <div align="center">
-  <img src="static/img/demo.png" alt="screenshot_project" width="100" height="100">
+  <img src="static/img/demo.png" alt="screenshot_project" width="100%" height="100%">
 </div>
 
 ## Functional Requirements
@@ -97,14 +97,14 @@ The task management system developed for the startup aims to provide a robust pl
 
 ## Use Case Diagram
 <div align="center">
-  <img src="static/img/use_case.png" alt="use_case_diagram" width="100" height="100">
+  <img src="static/img/use_case.png" alt="use_case_diagram" width="100%" height="100%">
 </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## ER Diagram
 <div align="center">
-  <img src="static/img/db.png" alt="er_diagram" width="100" height="100">
+  <img src="static/img/db.png" alt="er_diagram" width="100%" height="100%">
 </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -138,21 +138,26 @@ Before running the project makesure you meet all the prerequisites.
 Follow the below step by step process to install Taskmanager into the testbench.
 
 1. Clone the repo
+
    ```sh
    git clone https://github.com/mostakimjihad/TaskManager.git
    ```
    ```sh
    cd TaskManager
    ```
+
 2. Import Database Dump
+
    ```sh
    mysql -u username -p database_name < dump_file.sql
    ```
-   ```
+
 3. Apply Migrations
+
    ```sh
    python manage.py migrate
    ```
+
 4. Run the Development Server
    ```sh
    python manage.py runserver
