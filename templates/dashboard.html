@@ -16,7 +16,7 @@
          <span class="navbar-toggler-icon"></span>
          </button>
          <span class="navbar-text">
-         Hi, {{employee.username}}
+         Hi, {{employee.username}} ( {{employee.roll}} )
          </span>
          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
@@ -62,10 +62,10 @@
                   </svg>
                </h2>
                <hr>
-               <div class="d-flex justify-content-start p-2">
+                  <div class="p-2 d-flex flex-wrap">
                   {% if employee.roll == "admin" %}
                      {% for project in projects %}
-                        <div class="card" style="width: 18rem;">
+                        <div class="card mb-3" style="width: calc(50% - 20px); margin: 10px;">
                            <div class="card-body">
                               <h5 class="card-title text-center">{{ project.project_name }}</h5>
                            </div>
@@ -87,7 +87,7 @@
                      {% endfor %}
                   {% else %}
                      {% for assigned_project in assigned_projects %}
-                        <div class="card" style="width: 18rem; margin-right: 2rem;">
+                        <div class="card mb-3" style="width: calc(25% - 20px); margin: 10px;">
                            <div class="card-body">
                               <h5 class="card-title text-center">{{ assigned_project.project_name }}</h5>
                            </div>

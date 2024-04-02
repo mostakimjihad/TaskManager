@@ -11,9 +11,7 @@
     Django, Bootstrap, MySQL
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">Demo Youtube Video</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://www.youtube.com/watch?v=yhv9OjMyHz8">Demo Youtube Video</a>
   </p>
 </div>
 
@@ -56,41 +54,22 @@ The task management system developed for the startup aims to provide a robust pl
 ## Functional Requirements
 
 1. **User Management:**
-- Administrator can create and manage user accounts, including different roles such as Administrator, Project Manager, and Developer.
-- Each user has specific permissions and access levels based on their role.
   
 2. **Project Creation:**
-- Administrators can create new projects, specifying details such as project name, and deadline, and assigning a project manager.
-- The project creation form includes a selection menu for assigning a project manager.
 
 3. **Dashboard:**
-- Upon login, users are greeted with a dashboard displaying project details.
-- The dashboard shows the project name, completion status, last update, and due date.
-- Project Managers can only view projects assigned to them.
 
 4. **Project Details Page:**
-- Users can access detailed information about a specific project.
-- The project details page displays status updates and relevant team members assigned to the project along with their roles.
-- Developers can provide updates on project progress, including comments and completion percentages.
 
 5. **Project Completion:**
-- Project Managers can mark a project as completed once the completion status reaches 100%.
-- Completion status is updated based on the progress provided by developers.
-- A "complete" button is available for Project Managers to change the status of ongoing projects to complete.
 
 ## Non-Functional Requirements:
 
 1. **Usability:**
-- The system should be intuitive and easy to navigate for all users.
-- User interfaces should be designed for efficient task management and minimal cognitive load.
 
 2. **Scalability:**
-- The system should be scalable to accommodate the growing number of users and projects over time.
-- Database and server infrastructure should be designed to handle increased loads without compromising performance.
 
 3. **Reliability:**
-- The system should be reliable and available, with minimal downtime for maintenance or upgrades.
-- Backup and recovery mechanisms should be in place to prevent data loss in case of system failures.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
