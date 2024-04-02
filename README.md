@@ -49,6 +49,10 @@
 
 The task management system developed for the startup aims to provide a robust platform for streamlining project workflows within the organization. It caters to both internal teams and external clients, offering features that facilitate effective communication, task tracking, and project management. The system is designed to be intuitive and feature-rich, enhancing productivity and collaboration among team members.
 
+<div align="center">
+  <img src="static/img/demo.png" alt="screenshot_project" width="100" height="100">
+</div>
+
 ## Functional Requirements
 
 1. **User Management:**
@@ -91,13 +95,25 @@ The task management system developed for the startup aims to provide a robust pl
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Use Case Diagram
+<div align="center">
+  <img src="static/img/use_case.png" alt="use_case_diagram" width="100" height="100">
+</div>
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## ER Diagram
+<div align="center">
+  <img src="static/img/db.png" alt="er_diagram" width="100" height="100">
+</div>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![Django][Django.com]][https://www.djangoproject.com/]
-* [![Mysql][Mysql.com]][https://www.mysql.com/]
+* Bootstrap
+* Django
+* Mysql
 
 
 
@@ -113,28 +129,33 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+Before running the project makesure you meet all the prerequisites.
+* python 3.11.5
+* MySQL
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+Follow the below step by step process to install Taskmanager into the testbench.
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/mostakimjihad/TaskManager.git
    ```
-3. Install NPM packages
    ```sh
-   npm install
+   cd TaskManager
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+2. Import Database Dump
+   ```sh
+   mysql -u username -p database_name < dump_file.sql
+   ```
+   ```
+3. Apply Migrations
+   ```sh
+   python manage.py migrate
+   ```
+4. Run the Development Server
+   ```sh
+   python manage.py runserver
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
