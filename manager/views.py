@@ -31,7 +31,12 @@ def dashboard(request):
         projects = Project.objects.all()
         employee = Employee.objects.get(id=user_id)
         assigned_projects = employee.projects.all()
-        return render(request, 'dashboard.html', {'employee': employee, 'employees': employees, 'assigned_projects': assigned_projects, 'projects': projects})
+        last_updates = {}
+        for p in projects:
+            last_updates[p.id] = ProjectUpdate.objects.filter(project=p).order_by('-id').first().comment
+
+        print(last_updates)
+        return render(request, 'dashboard.html', {'employee': employee, 'employees': employees, 'assigned_projects': assigned_projects, 'projects': projects, 'last_updates': last_updates})
     else:
         return redirect('login')
     
@@ -104,14 +109,35 @@ def details(request, project_id):
         employee = Employee.objects.get(id=user_id)
         project = Project.objects.get(id=project_id)
         updates = ProjectUpdate.objects.filter(project=project)
-        employees = project.team.all()
-        if request.method == 'POST':
-            comment = request.POST.get('comment')
-            completion = request.POST.get('completion')
-            update = ProjectUpdate.objects.create(employee=employee, project=project, comment=comment, completion=completion)
-            return redirect('details', project_id=project_id)
+        last_update = ProjectUpdate.objects.filter(project=project).order_by('-id').first()
+        if last_update is None:
+            compare = 0
         else:
-            return render(request, 'details.html', {'employee': employee, 'employees': employees, 'project': project, 'updates': updates})
+            compare = last_update.completion
+        print(last_update)
+        employees = project.team.all()
+        available_developers = Employee.objects.filter(roll='developer')
+        
+        if request.method == 'POST':
+            if 'project_update' in request.POST and employee.roll == 'developer':
+                comment = request.POST.get('comment')
+                completion = request.POST.get('completion')
+                print(completion)
+                if int(completion) <= int(compare) or int(compare) > 100:
+                    messages.error(request, 'Completion should be greater than the previous completion and not greater than 100%')
+                    return redirect('details', project_id=project_id)
+                else:
+                    update = ProjectUpdate.objects.create(employee=employee, project=project, comment=comment, completion=completion)
+                    return redirect('details', project_id=project_id)
+            
+            elif 'add_developer' in request.POST and employee.roll == 'manager':
+                developer_id = request.POST.get('developer')
+                developer = Employee.objects.get(id=developer_id)
+                project.team.add(developer)
+                return redirect('details', project_id=project_id)
+
+        return render(request, 'details.html', {'employee': employee, 'employees': employees, 'project': project, 'updates': updates, 'last_update': last_update, 'available_developers': available_developers})
+    
     else:
         return redirect('login')
 

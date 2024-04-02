@@ -43,6 +43,13 @@
       <!-- contain -->
       <div class="container p-5">
          <div class="row align-items-start">
+            {% if messages %}
+               {% for message in messages %}
+                  <div class="alert alert-danger" role="alert">
+                     {{ message }}
+                  </div>
+               {% endfor %}
+            {% endif %}
             <div class="col-lg-8 shadow p-3">
                <h2 class="text-center">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
@@ -56,7 +63,6 @@
                <table class="table table-bordered">
                   <thead>
                      <tr class="table-danger">
-                        <th scope="col">ID</th>
                         <th scope="col">Comment</th>
                         <th scope="col">Completion</th>
                         <th scope="col">Comment By</th>
@@ -65,7 +71,6 @@
                   <tbody>
                      {% for update in updates%}
                      <tr>
-                        <th scope="row">{{ update.id }}</th>
                         <td>{{ update.comment }}</td>
                         <td>{{ update.completion }}</td>
                         <td>{{ update.employee.username }}</td>
@@ -74,9 +79,11 @@
                   </tbody>
                </table>
                <!-- Button trigger modal -->
+               {% if employee.roll == 'developer' %}
                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                Add Update
                </button>
+               {% endif %}
                <!-- Modal -->
                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
@@ -99,7 +106,7 @@
                            </div>
                            <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-primary">Save changes</button>
+                              <button name="project_update" type="submit" class="btn btn-primary">Save changes</button>
                            </div>
                         </form>
                      </div>
@@ -123,12 +130,35 @@
                <div class="d-flex justify-content-between">
                   <div class="card w-100" style="width: 18rem;">
                      <div class="card-body">
-                        <h5 class="card-title text-center">Project Name</h5>
+                        <h5 class="card-title text-center">{{ project.project_name }}</h5>
                      </div>
                      <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><span class="fw-bold">Completion status : </span>10%</li>
-                        <li class="list-group-item"><span class="fw-bold">Last update : </span>project added</li>
-                        <li class="list-group-item"><span class="fw-bold">Due date : </span>Cras justo odio</li>
+                        <li class="list-group-item"><span class="fw-bold">Status : </span>{{ project.status }}</li>
+                        <li class="list-group-item"><span class="fw-bold">Due date : </span>{{ project.due_date }}</li>
+                        <li class="list-group-item"><span class="fw-bold">Last update : </span>{{ last_update.comment }}</li>
+                        <li class="list-group-item"><span class="fw-bold">Co-workers: </span>
+                           <ul>
+                              {% for worker in employees %}
+                                 <li class="m-auto">{{ worker.username }} ( {{ worker.roll}} )</li>
+                              {% endfor %}
+                           </ul>
+                        </li>
+                        {% if employee.roll == 'manager' %}
+                           <li class="list-group-item">
+                              <form action="{% url 'details' project.id %}" method="post">
+                                 {% csrf_token %}
+                                 <div class="input-group mb-3">
+                                    <p class="text-secondary">Add Developers</p>
+                                    <select name="developer" id="countries" multiple>
+                                       {% for available_developer in available_developers%}
+                                       <option value="{{ available_developer.id }}">{{ available_developer.username }}</option>
+                                       {% endfor %}
+                                    </select>
+                                 </div>
+                                 <button name="add_developer" type="submit" class="btn btn-primary">Add Developer</button>
+                              </form>
+                           </li>
+                        {% endif %}
                      </ul>
                   </div>
                </div>

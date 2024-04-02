@@ -43,8 +43,12 @@
       <!-- contain -->
       <div class="container p-5">
          <div class="row align-items-start">
-            <div class="col-lg-6 shadow p-3">
-               <h2 class="text-center">
+            {% if employee.roll == 'admin' %}
+               <div class="col-lg-6 shadow p-3">
+            {% else %}
+               <div class="col-lg-12 shadow p-3">
+            {% endif %}
+               <h2 class="text-center p-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-task" viewBox="0 0 16 16">
                      <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z"/>
                      <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z"/>
@@ -57,6 +61,7 @@
                      <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z"/>
                   </svg>
                </h2>
+               <hr>
                <div class="d-flex justify-content-between">
                   {% if employee.roll == "admin" %}
                      {% for project in projects %}
@@ -66,8 +71,14 @@
                            </div>
                            <ul class="list-group list-group-flush">
                               <li class="list-group-item"><span class="fw-bold">Status : </span>{{ project.status }}</li>
-                              <li class="list-group-item"><span class="fw-bold">Last update : </span>project added</li>
                               <li class="list-group-item"><span class="fw-bold">Due date : </span>{{ project.due_date }}</li>
+                              <li class="list-group-item"><span class="fw-bold">Last Update : </span>
+                                 {% for key, value in last_updates.items %}
+                                    {% if key == project.id %}
+                                       {{ value }}
+                                    {% endif %}
+                                 {% endfor %}
+                              </li>
                            </ul>
                            <div class="card-body">
                               <a href="{% url 'details' project.id %}" class="card-link">Details</a>
@@ -82,8 +93,14 @@
                            </div>
                            <ul class="list-group list-group-flush">
                               <li class="list-group-item"><span class="fw-bold">Status : </span>{{ assigned_project.status }}</li>
-                              <li class="list-group-item"><span class="fw-bold">Last update : </span>project added</li>
                               <li class="list-group-item"><span class="fw-bold">Due date : </span>{{ assigned_project.due_date }}</li>
+                              <li class="list-group-item"><span class="fw-bold">Last Update : </span>
+                                 {% for key, value in last_updates.items %}
+                                    {% if key == assigned_project.id %}
+                                       {{ value }}
+                                    {% endif %}
+                                 {% endfor %}
+                              </li>
                            </ul>
                            <div class="card-body">
                               <a href="{% url 'details' assigned_project.id %}" class="card-link">Details</a>
@@ -95,7 +112,7 @@
             </div>
             {% if employee.roll == "admin" %}
             <div class="col-lg-6 shadow p-3">
-               <h2 class="text-center">
+               <h2 class="text-center p-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
                      <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
                   </svg>
@@ -104,7 +121,8 @@
                      <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
                   </svg>
                </h2>
-               <table class="table table-bordered shadow">
+               <hr>
+               <table class="table table-bordered">
                   <thead>
                      <tr class="table-danger">
                         <th scope="col">ID</th>
